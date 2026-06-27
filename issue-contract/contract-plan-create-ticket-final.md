@@ -26,7 +26,7 @@ Basato su: `template/contract-sketch-create-ticket.md`, `template/data-sketch-cr
 ## 3. Data Sketch — Campi Classificati
 
 | Campo | Stato | Tipo | Motivo | Fonte |
-|---|---|---|---|---|---|
+|---|---|---|---|---|
 | `title` | accettato | string | Valore minimo per identificare la richiesta. Obbligatorio. Vincoli: max 100 caratteri dopo trimming, non vuoto, non soli spazi | issue |
 | `description` | accettato | string | Campo opzionale per descrizione dettagliata del ticket. Vincoli: opzionale (può essere vuoto), max 3000 caratteri | issue / app |
 | `customer` | accettato | string | Nome del cliente che segnala il problema. Opzionale in fase di creazione | app (seed data) |
