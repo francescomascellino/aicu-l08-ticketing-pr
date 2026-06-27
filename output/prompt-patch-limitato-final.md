@@ -4,6 +4,9 @@ Data: 2026-06-27
 
 ---
 
+## Documenti revisionati:
+- Entry-point map: `output\entry-point-map-final.md`
+
 ## Task Confermato
 
 > "Serve creare ticket dal supporto."
@@ -20,7 +23,7 @@ Data: 2026-06-27
 | `src/components/TicketForm.jsx` | **Nuovo** — componente form con campi title, description, customer, priority, area; pulsanti Annulla, Resetta campi, Invia Ticket (non funzionante) |
 | `src/styles.css` | Aggiungere classi CSS per form, field group, input/textarea/select, pulsanti, responsive |
 
-## File Che Non Verranno TocCAti
+## File Che Non Verranno Toccati
 
 - `src/components/TicketList.jsx`
 - `src/components/TicketCard.jsx`

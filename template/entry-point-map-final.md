@@ -1,20 +1,5 @@
 # Mappa Dei Punti Di Intervento (Entry-Point Map) - Create Ticket
 
-## Prima Di Compilare
-
-Una mappa dei punti di intervento (entry-point map) e' una mappa dei file o delle aree in cui la modifica potrebbe entrare.
-
-Serve a distinguere:
-
-- file suggeriti dall'AI;
-- file trovati nel repo;
-- file davvero collegati al task;
-- file da non toccare.
-
-L'output atteso e' una lista di candidati con evidenza, non una lista di nomi plausibili.
-
-Non segnare un file come `ammesso` se non lo hai aperto o letto.
-
 ## Task
 
 ```txt
@@ -27,31 +12,7 @@ Serve creare ticket dal supporto.
 - Contract sketch L06 importato: `issue-contract\contract-plan-create-ticket-final.md`
 - Data sketch L06 importato: `issue-contract\contract-plan-create-ticket-final.md`
 
-# Prompt
-
-```txt
-Dato il contenuto di
-- Issue: `issue-contract\create-ticket-issue-final.md`
-- Contract sketch: `issue-contract\contract-plan-create-ticket-final.md`
-- Data sketch: `issue-contract\contract-plan-create-ticket-final.md`
-Trova le aree candidate per creare nuovi ticket.
-Non modificare file.
-Per ogni area spiega perche' potrebbe contare.
-Marca come ipotesi tutto cio' che non puoi verificare.
-Indica il percorso relativo di ogni file.
-Non accedere alle cartelle: docs, output, per-chi-non-ha-completato-l05-06, node_modules
-```
-
-## Regola
-
-Un file suggerito dall'AI non e' ancora un file candidato verificato.
-
-Diventa candidato solo se:
-
-- esiste;
-- e' stato aperto o letto;
-- ha un ruolo collegato al task;
-- hai scritto l'evidenza minima.
+# Mappa Generale — File Candidati Per Il Task Completo
 
 ## File Candidati
 
@@ -66,19 +27,9 @@ Diventa candidato solo se:
 | server/validators/ticket.js | Sviluppatore | La logica di validazione potrebbe stare in un file separato | ammesso |
 | src/components/TicketForm.jsx | Sviluppatore | Form di creazione del ticket | ammesso, da creare |
 
+---
 
-## File Ammessi Per Il Primo Slice
-- src/App.jsx
-- src/styles.css
-- src/components/TicketForm.jsx
-
-## File Vietati O Fuori Scope
-
-- server/index.js — Nessuna modifica al server in questo slice UI. Le rotte API verranno implementate in slice successivi.
-- src/api.js — Nessuna chiamata API in questo slice. La funzione createTicket() verrà aggiunta in slice successivi.
-- src/components/TicketList.jsx — Il form e il pulsante "Crea Ticket" sono gestiti da App.jsx, non da TicketList.
-- server/data/tickets.js — La logica dati non è toccata in questo slice UI.
-- server/validators/ticket.js — La validazione è richiesta dal task generale ma non dal primo slice (solo scheletro form). Verrà implementata in slice successivi.
+# Mappa Di Slice — Primo Slice: Form
 
 ## Primo Slice Proposto
 
@@ -91,23 +42,29 @@ Creazione del componente form accessibile tramite click sul pulsante "Crea Ticke
 - E' lo scheletro dietro il quale verrà costruita la logica per l'invio della chiamata API.
 - Verifica manuale semplice
 
+## File Ammessi Per Il Primo Slice
+
+- src/App.jsx
+- src/styles.css
+- src/components/TicketForm.jsx
+
+## File Vietati O Fuori Scope
+
+- server/index.js — Nessuna modifica al server in questo slice UI. Le rotte API verranno implementate in slice successivi.
+- src/api.js — Nessuna chiamata API in questo slice. La funzione createTicket() verrà aggiunta in slice successivi.
+- src/components/TicketList.jsx — Il form e il pulsante "Crea Ticket" sono gestiti da App.jsx, non da TicketList.
+- server/data/tickets.js — La logica dati non è toccata in questo slice UI.
+- server/validators/ticket.js — La validazione è richiesta dal task generale ma non dal primo slice (solo scheletro form). Verrà implementata in slice successivi.
+
 ## Verifica Manuale Proposta
 
 ```txt
 Al click sul pulsante "Crea Ticket", viene mostrato il form. E' possibile annullare l'operazione e tornare alla Dashboard. E' Possibile resettare i campi con il pulsante preposto nel form. Ancora non è possibile inviare premendo sul pulsante "Invia Ticket".
 ```
 
-## Stop Condition
+---
 
-Fermarsi se:
+## Documenti Collegati
 
-- serve auth;
-- serve migration;
-- serve redesign;
-- serve dashboard;
-- serve toccare file non verificati;
-- il tool propone piu' dello slice approvato.
-
-## Domande Aperte Per L08
-
-- Nessuna
+- Piano patch eseguito: `output/prompt-patch-limitato.md`
+- Review del piano: `output/reviewer-leggero.md`

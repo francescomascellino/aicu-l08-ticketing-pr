@@ -5,8 +5,8 @@ Data: 2026-06-27
 Documenti revisionati:
 - Issue: `issue-contract/create-ticket-issue-final.md`
 - Contract sketch: `issue-contract/contract-plan-create-ticket-final.md`
-- Entry-point map: `template/entry-point-map.md`
-- Piano patch: `output/prompt-patch-limitato.md`
+- Entry-point map: `output\entry-point-map-final.md`
+- Piano patch: `output\prompt-patch-limitato-final.md`
 
 ---
 
