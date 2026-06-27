@@ -21,21 +21,25 @@ Dato questo task:
 "Serve creare ticket dal supporto."
 
 Usa questi input:
-- issue: [link o testo]
-- contract sketch: [link o testo]
-- data sketch: [link o testo]
-- mappa dei punti di intervento: [link o testo]
+- issue: issue-contract/create-ticket-issue-final.md
+- contract sketch: issue-contract\contract-plan-create-ticket-final.md
+- data sketch: issue-contract\contract-plan-create-ticket-final.md
+- mappa dei punti di intervento: template/entry-point-map.md
 
 Applica solo il primo slice approvato:
-[descrivi lo slice]
+Creazione del componente form accessibile tramite click sul punlsante "Crea Ticket".
 
 File o aree ammesse:
-- [file/area]
-- [file/area]
+- src/App.jsx
+- src/styles.css
+- src/components/TicketForm.jsx
 
 File o aree vietate:
-- [file/area]
-- [file/area]
+- server/index.js
+-src/api.js 
+- src/components/TicketList.jsx
+- server/data/tickets.js
+- server/validators/ticket.js | Sviluppatore | La logica di validazione potrebbe stare in un file separato | ammesso |
 
 Non aggiungere:
 - auth;
@@ -71,7 +75,7 @@ Se manca uno di questi punti, chiedi correzione prima della patch.
 ## Verifica Attesa
 
 ```txt
-[scrivi la verifica manuale minima da eseguire nel lab]
+Al click sul pulsante "Crea Ticket", viene mostrato il form. E' possibile annullare l'operazione e tornare alla Dashboard. E' Possibile resettare i campi con il pulsante preposto nel form. Ancora non è possibile inviare premendo sul pulsante "Invia Ticket".
 ```
 
 ## Note
