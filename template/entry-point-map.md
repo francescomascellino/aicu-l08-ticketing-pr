@@ -58,35 +58,44 @@ Diventa candidato solo se:
 | File / area | Suggerito da | Evidenza verificata | Stato |
 | --- | --- | --- | --- |
 | server/index.js (righe 26-31) | repo/AI |  La route POST /api/tickets restituisce 501 NOT_IMPLEMENTED. Questa è la rotta API per la creazione di un nuovo ticket | ammesso |
-| src/api.js (righe 1-16) | AI  | anca una funzione createTicket(payload) che chiami POST /api/tickets. | ammesso |
-| [file] | AI / repo / docente | [cosa hai letto] | ammesso / dubbio / vietato |
+| src/api.js (righe 1-16) | AI  | Manca una funzione createTicket(payload) che chiami POST /api/tickets. | ammesso |
+| src/App.jsx (righe 1-57) | Sviluppatore | Dovrebbe ospitare il pulsante "Crea ticket" | ammesso |
+| src/components/TicketList.jsx | AI | Potrebbe ospitare il pulsante "Crea ticket" nell'intestazione della sezione, oppure delegare ad App. Ipotesi: il form potrebbe essere integrato qui o essere un componente separato. | vietato |
+| src/styles.css | AI | serviranno nuove classi CSS per il form di creazione e per i feedback di validazione. | ammesso |
+| server/data/tickets.js | AI | Il contract plan (sezione 6) definisce un error model minimo con 2 casi: campo richiesto mancante/vuoto e valore fuori contratto. | vietato |
+| server/validators/ticket.js | Sviluppatore | La logica di validazione potrebbe stare in un file separato | ammesso |
+| src/components/TicketForm.jsx | Sviluppatore | Form di creazione del ticket | ammesso |
+
 
 ## File Ammessi Per Il Primo Slice
 
-- [file o area ammessa]
-- [file o area ammessa]
+- server/index.js
+- src/api.js
+- src/App.jsx
+- src/styles.css
+- server/validators/ticket.js
+- src/components/TicketForm.jsx
 
 ## File Vietati O Fuori Scope
 
-- [file o area da non toccare] - [motivo]
-- [file o area da non toccare] - [motivo]
-- [file o area da non toccare] - [motivo]
+- src/components/TicketList.jsx - Il form e il pulsante di creazione dei ticket si troverà in una sezione separata
+- server/data/tickets.js - La validazione si troverà in una file separato
 
 ## Primo Slice Proposto
 
 ```txt
-[descrivi il primo intervento reviewabile, non la feature completa]
+Creazione del componente form accessibile tramite click sul punlsante "Crea Ticket".
 ```
 
 ## Perche' Questo Slice E' Piccolo
 
-- [motivo 1]
-- [motivo 2]
+- E' lo scheletro dietro il quale verrà costruita la logica per l'invio della chiamata API.
+- Verifica manuale semplice
 
 ## Verifica Manuale Proposta
 
 ```txt
-[azione minima, input, risultato atteso]
+Al click sul pulsante "Crea Ticket", viene mostrato il form. E' possibile annullare l'operazione e tornare alla Dashboard. E' Possibile resettare i campi con il pulsante preposto nel form. Ancora non è possibile inviare premendo sul pulsante "Invia Ticket".
 ```
 
 ## Stop Condition
