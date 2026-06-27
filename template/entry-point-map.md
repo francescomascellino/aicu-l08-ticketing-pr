@@ -30,10 +30,16 @@ Serve creare ticket dal supporto.
 # Prompt
 
 ```txt
-Trova le aree candidate per aggiungere note interne ai ticket.
+Dato il contenuto di
+- Issue: `issue-contract\create-ticket-issue-final.md`
+- Contract sketch: `issue-contract\contract-plan-create-ticket-final.md`
+- Data sketch: `issue-contract\contract-plan-create-ticket-final.md`
+Trova le aree candidate per creare nuovi ticket.
 Non modificare file.
 Per ogni area spiega perche' potrebbe contare.
 Marca come ipotesi tutto cio' che non puoi verificare.
+Indica il percorso relativo di ogni file.
+Non accedere alle cartelle: docs, output, per-chi-non-ha-completato-l05-06, node_modules
 ```
 
 ## Regola
