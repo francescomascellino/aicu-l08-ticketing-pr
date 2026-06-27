@@ -59,7 +59,7 @@ Diventa candidato solo se:
 | --- | --- | --- | --- |
 | server/index.js (righe 26-31) | repo/AI |  La route POST /api/tickets restituisce 501 NOT_IMPLEMENTED. Questa è la rotta API per la creazione di un nuovo ticket | ammesso |
 | src/api.js (righe 1-16) | AI  | anca una funzione createTicket(payload) che chiami POST /api/tickets. | ammesso |
-| src/App.jsx | AI | [cosa hai letto] | ammesso / dubbio / vietato |
+| [file] | AI / repo / docente | [cosa hai letto] | ammesso / dubbio / vietato |
 
 ## File Ammessi Per Il Primo Slice
 
