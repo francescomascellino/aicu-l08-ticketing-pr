@@ -17,8 +17,8 @@ Basato su: `template/contract-sketch-create-ticket.md`, `template/data-sketch-cr
 | Superficie | Cosa riguarda |
 |---|---|
 | UI | L'utente ha accesso a un form che gli permette di inviare un nuovo ticket |
-| API / azione | Viene inviato al server un payload contenente `title` (obbligatorio) e `content` (opzionale) |
-| Dati | title (string, accettato), content (string, accettato), status (string, generato), id (integer/uuid, generato), createdAt (date, generato), updatedAt (date, generato) |
+| API / azione | Viene inviato al server un payload contenente `title` (obbligatorio), `description` (opzionale), `customer` (opzionale), `priority` (opzionale), `area` (opzionale) |
+| Dati | title (string, accettato), description (string, accettato), customer (string, accettato), priority (string, accettato), area (string, accettato), id (string, generato), status (string, generato), source (string, generato), createdAt (date, generato), updatedAt (date, generato) |
 | Verifica | I dati che non passano la validazione ricevono un errore. In caso di errore dal server, riceviamo un errore in risposta dall'API esposta |
 
 ---
@@ -26,19 +26,19 @@ Basato su: `template/contract-sketch-create-ticket.md`, `template/data-sketch-cr
 ## 3. Data Sketch — Campi Classificati
 
 | Campo | Stato | Tipo | Motivo | Fonte |
-|---|---|---|---|---|
+|---|---|---|---|---|---|
 | `title` | accettato | string | Valore minimo per identificare la richiesta. Obbligatorio. Vincoli: max 100 caratteri dopo trimming, non vuoto, non soli spazi | issue |
-| `content` | accettato | string | Campo opzionale per descrizione dettagliata del ticket. Vincoli: opzionale (può essere vuoto), max 3000 caratteri | decisione |
-| `priority` | mancante | — | Attualmente fuori scope in questo slice | decisione |
-| `area` | mancante | — | Attualmente fuori scope in questo slice | decisione |
-| `status` | generato | string | Alla creazione il ticket riceve status "open" automaticamente. Non inviato dall'utente ma presente nel modello restituito | decisione |
-| `id` | generato | integer / uuid | L'id viene generato dal database al momento dell'inserimento | issue |
-| `attachments` | respinto | — | La presenza di allegati verrà valutata in fasi successive | decisione |
-| `owner` | mancante | — | Attualmente fuori scope in questo slice | decisione |
-| `createdAt` | generato | date | Data di creazione generata dal server. Inclusa nel modello ma non esposta nella UI | issue |
-| `updatedAt` | generato | date | Data di ultima modifica aggiornata automaticamente dal server. Sarà utile per gli slice di edit/delete futuri | inferenza |
+| `description` | accettato | string | Campo opzionale per descrizione dettagliata del ticket. Vincoli: opzionale (può essere vuoto), max 3000 caratteri | issue / app |
+| `customer` | accettato | string | Nome del cliente che segnala il problema. Opzionale in fase di creazione | app (seed data) |
+| `priority` | accettato | string | Livello di urgenza del ticket. Opzionale in fase di creazione. Valori ammessi: "Alta", "Media", "Bassa" | app (seed data) |
+| `area` | accettato | string | Area funzionale di competenza. Opzionale in fase di creazione. Valori ammessi: "Billing", "Accessi", "Comunicazioni", "Tecnico" | app (seed data) |
+| `status` | generato | string | Alla creazione il ticket riceve status "open" automaticamente | decisione |
+| `source` | generato | string | Alla creazione il ticket riceve source "support" automaticamente | app (seed data) |
+| `id` | generato | string | L'id viene generato dal database. Formato: "TCK-XXXX" | app (seed data) |
+| `createdAt` | generato | date | Data di creazione generata dal server | issue |
+| `updatedAt` | generato | date | Data di ultima modifica aggiornata automaticamente dal server | app (seed data) |
 
-**Totale: 10 campi classificati** (2 accettati, 5 generati, 3 mancanti, 1 respinto).
+**Totale: 10 campi classificati** (5 accettati, 5 generati).
 
 ---
 
@@ -50,16 +50,18 @@ erDiagram
   TICKET {
     string id "generato"
     string title "accettato"
-    string content "accettato"
+    string description "accettato"
+    string customer "accettato"
+    string priority "accettato"
+    string area "accettato"
     string status "generato"
+    string source "generato"
     date createdAt "generato"
     date updatedAt "generato"
   }
 ```
 
-Mostra solo campi con stato `accettato` o `generato`. Campi `mancanti` e `respinti` sono esclusi dal diagramma.
-
-> **Nota sul tipo di `id`**: nella tabella è indicato come `integer / uuid`. La scelta dipende dal server: auto-increment (integer) o UUID. Il Mermaid usa `string` come tipo generico; la tabella Campi è l'unica fonte di verità per il tipo esatto.
+Mostra solo campi con stato `accettato` o `generato`.
 
 ---
 
@@ -69,22 +71,30 @@ Mostra solo campi con stato `accettato` o `generato`. Campi `mancanti` e `respin
 
 ```json
 {
-  title: "il titolo del ticket",
-  content: "la descrizione della richiesta del ticket",
+  title: "Richiesta nuovo accesso",
+  description: "Il cliente richiede l'abilitazione di un nuovo operatore",
+  customer: "Boolean Support",
+  priority: "Media",
+  area: "Accessi"
 }
 ```
 
-**Perché è valido**: Contiene i dati minimi richiesti (`title` obbligatorio, `content` opzionale).
+**Perché è valido:** Contiene `title` obbligatorio più tutti i campi opzionali previsti dal modello.
 
 **Risposta attesa — successo:**
 
 ```json
 {
-  id: // l'id generato dal server
-  title: "il titolo del ticket",
-  content: "la descrizione della richiesta del ticket",
-  status: "open"
-  createdAt: // la data di creazione viene generata dal server
+  id: "TCK-1055",
+  title: "Richiesta nuovo accesso",
+  description: "Il cliente richiede l'abilitazione di un nuovo operatore",
+  customer: "Boolean Support",
+  priority: "Media",
+  area: "Accessi",
+  status: "open",
+  source: "support",
+  createdAt: "2026-06-27T10:00:00.000Z",
+  updatedAt: "2026-06-27T10:00:00.000Z"
 }
 ```
 
@@ -95,7 +105,10 @@ Mostra solo campi con stato `accettato` o `generato`. Campi `mancanti` e `respin
 ```json
 {
   title: "",
-  content: "la descrizione della richiesta del ticket",
+  description: "Richiesta di abilitazione operatore",
+  customer: "Boolean Support",
+  priority: "Media",
+  area: "Accessi"
 }
 ```
 
@@ -115,7 +128,10 @@ Mostra solo campi con stato `accettato` o `generato`. Campi `mancanti` e `respin
 ```json
 {
   title: "Questo titolo contiene più di cento caratteri. è un titolo davvero lungo, non dovrebbe essere accettato, mi chiedo come sia possibile che abbia passato la validazione, è così lungo che non riesco a visualizzarlo per intero!",
-  content: "la descrizione della richiesta del ticket",
+  description: "Richiesta di abilitazione operatore",
+  customer: "Boolean Support",
+  priority: "Media",
+  area: "Accessi"
 }
 ```
 
@@ -146,20 +162,21 @@ Mostra solo campi con stato `accettato` o `generato`. Campi `mancanti` e `respin
 - Attachments
 - Auth, referral, reporter
 - Non generare codice, schema del database, migrazioni, UI, test automatici, rotte API, PR
-- Owner, priority, area (rimandati a slice futuri)
+- Owner (rimandato a slice futuri)
 
 ---
 
 ## 8. Deliverable Check
 
-- ✅ 1 payload valido (sezione 5.1)
+- ✅ 1 payload valido con tutti i campi del modello (sezione 5.1)
 - ✅ 2 payload invalidi (sezioni 5.2, 5.3)
 - ✅ Ogni payload ha risposta attesa
 - ✅ Ogni errore ha motivo leggibile
-- ✅ Almeno 5 campi classificati (10 totali, sezione 3)
+- ✅ 10 campi classificati (5 accettati, 5 generati, sezione 3)
 - ✅ Ogni campo ha stato, motivo e fonte
-- ✅ Mermaid mostra solo relazioni minime e campi motivati
+- ✅ Mermaid mostra tutti i campi accettati e generati
 - ✅ Non-goals della issue L05 rispettati
+- ✅ Modello dati allineato con i seed data dell'app
 
 ---
 
@@ -168,12 +185,26 @@ Mostra solo campi con stato `accettato` o `generato`. Campi `mancanti` e `respin
 | Cosa | Dove cercare |
 |---|---|
 | Implementazione modello Ticket | Cercare file del model nell'app (es. `models/ticket.js` o equivalente) |
-| Naming convention del campo `title` | Verificare che il nome `title` sia coerente in model, controller, route |
-| Naming convention del campo `content` | Verificare che il nome `content` sia coerente in model, controller, route |
+| Naming convention `title`, `description` | Verificare coerenza in model, controller, route |
 | Validazione title: 100 caratteri, trimming, non vuoto | Cercare logica di validazione nel controller o in un validator |
-| Validazione content: 3000 caratteri, opzionale | Cercare logica di validazione nel controller o in un validator |
-| Endpoint POST esposto dal server | Cercare route file che espone la creazione del ticket |
-| Gestione errore 400 | Cercare error handler per validazione fallita |
-| Campo `status` generato | Verificare che il model assegni "open" di default |
-| Campo `createdAt` e `updatedAt` | Verificare che il model o DB li gestisca automaticamente (es. timestamps) |
-| Campo `id` generato dal DB | Verificare auto-increment o UUID nella configurazione del model |
+| Validazione description: 3000 caratteri, opzionale | Cercare logica di validazione nel controller o in un validator |
+| Validazione customer: opzionale, string | Cercare logica di validazione |
+| Validazione priority: valori ammessi ["Alta","Media","Bassa"] | Valori ammessi regolati dalla logica validazione |
+| Validazione area: valori ammessi ["Billing","Accessi","Comunicazioni","Tecnico"] |Valori ammessi regolati dalla logica validazione |
+| Endpoint POST esposto dal server | Route in `server/index.js:26` |
+| Gestione errore 400 | Error handler per validazione fallita |
+| Campo `status` generato | Assegnare "open" di default |
+| Campo `source` generato | Assegnare "support" di default |
+| Campo `createdAt` e `updatedAt` | Generare dal server (es. `new Date().toISOString()`) |
+| Campo `id` generato | Generare formato "TCK-XXXX" (auto-increment su array) |
+
+---
+
+## 10. Allineamento con modello dati dell'app
+
+| Disallineamento | Risoluzione |
+|---|---|
+| `content` → `description` | Rinominato in tutto il documento |
+| `id` tipo `integer/uuid` → `string` | Formato "TCK-XXXX" come nei seed data |
+| Campi mancanti `customer`, `priority`, `area`, `source` | Aggiunti come accettati/generati |
+| `priority` e `area` rimossi dai non-goals | Ora presenti nel modello con valori ammessi |

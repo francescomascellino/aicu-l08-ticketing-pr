@@ -9,7 +9,7 @@ Serve creare ticket dal supporto.
 ## Fatti (Facts)
 
 - Stiamo lavorando su un'applicativo di ticketing basilare a scopo didattico che usa React, JS, Node, Express.
-- Il ticket avrà come forma minima un id e un content, una data di creazione e dovrà essere salvato su database. Non potrà superare i 3000 caratteri e non potrà essere vuoto o composto da soli spazi. Dovrà essere applicata la validazione logica per questo tipo di elemento.
+- Il ticket avrà come forma minima un id (string), un title (obbligatorio) e una description (opzionale, max 3000 caratteri se fornita), una data di creazione e dovrà essere salvato su database. title non potrà essere vuoto o composto da soli spazi e non potrà superare i 100 caratteri dopo trimming. description, se fornita, non potrà superare i 3000 caratteri. Dovrà essere applicata la validazione logica per questo tipo di elemento.
 - L'ID verrà creato dal database
 - Gli endpoint per le chiamate sono già esposti dal server
 - Useremo un pattern MVC
@@ -33,8 +33,11 @@ Avere a disposizione un componente raggiungibile dalla UI che ci permette tramit
 
 ## Criteri Di Accettazione (Acceptance Criteria)
 
-1. Qualsiasi validazione fallisca (max 3000 char dopo trimming, campo vuoto dopo trimming, non soli spazi), la POST non viene eseguita e l'utente riceve un errore che identifica il campo. Il content viene trimmato prima della validazione.
-2. Se tutte le validazioni passano (≤ 3000 char e non vuoto dopo trimming), viene effettuata la chiamata POST che crea il ticket nel Database.
+1. **Validazione title**: se vuoto dopo trimming, o composto da soli spazi, o supera 100 caratteri, la POST non viene eseguita e l'utente riceve un errore che identifica il campo.
+
+2. **Validazione description**: se fornita e supera 3000 caratteri dopo trimming, la POST non viene eseguita e l'utente riceve un errore che identifica il campo. Description è opzionale: può essere omessa o vuota.
+
+3. Se tutte le validazioni passano, viene effettuata la chiamata POST che crea il ticket nel Database.
 
 ## Piano Di Verifica Manuale (Manual Test Plan)
 
