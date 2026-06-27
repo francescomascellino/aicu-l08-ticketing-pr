@@ -23,9 +23,18 @@ Serve creare ticket dal supporto.
 
 ## Input Usati
 
-- Issue L05 importata: `lavoro-precedente/issue-create-ticket.md`
-- Contract sketch L06 importato: `lavoro-precedente/contract-sketch-create-ticket.md`
-- Data sketch L06 importato: `lavoro-precedente/data-sketch-create-ticket.md`
+- Issue L05 importata: `issue-contract\create-ticket-issue-final.md`
+- Contract sketch L06 importato: `issue-contract\contract-plan-create-ticket-final.md`
+- Data sketch L06 importato: `issue-contract\contract-plan-create-ticket-final.md`
+
+# Prompt
+
+```txt
+Trova le aree candidate per aggiungere note interne ai ticket.
+Non modificare file.
+Per ogni area spiega perche' potrebbe contare.
+Marca come ipotesi tutto cio' che non puoi verificare.
+```
 
 ## Regola
 
@@ -42,9 +51,9 @@ Diventa candidato solo se:
 
 | File / area | Suggerito da | Evidenza verificata | Stato |
 | --- | --- | --- | --- |
-| [file] | AI / repo / consegna | [cosa hai letto] | ammesso / dubbio / vietato |
-| [file] | AI / repo / consegna | [cosa hai letto] | ammesso / dubbio / vietato |
-| [file] | AI / repo / consegna | [cosa hai letto] | ammesso / dubbio / vietato |
+| [file] | AI / repo / docente | [cosa hai letto] | ammesso / dubbio / vietato |
+| [file] | AI / repo / docente | [cosa hai letto] | ammesso / dubbio / vietato |
+| [file] | AI / repo / docente | [cosa hai letto] | ammesso / dubbio / vietato |
 
 ## File Ammessi Per Il Primo Slice
 
