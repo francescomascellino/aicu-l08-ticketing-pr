@@ -1,11 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { fetchOpenTickets } from "./api.js";
 import TicketList from "./components/TicketList.jsx";
+import TicketForm from "./components/TicketForm.jsx";
 
 export default function App() {
   const [tickets, setTickets] = useState([]);
   const [status, setStatus] = useState("loading");
   const [error, setError] = useState("");
+  const [showForm, setShowForm] = useState(false);
 
   const forceEmpty = useMemo(() => {
     const params = new URLSearchParams(window.location.search);
@@ -46,12 +48,27 @@ export default function App() {
           <p className="eyebrow">Support Ops</p>
           <h1>Dashboard ticket</h1>
         </div>
-        <span className="environment-badge">Modulo 02 - Lab 08</span>
+        <div className="header-actions">
+          <span className="environment-badge">Modulo 02 - Lab 08</span>
+          <button
+            className="create-ticket-btn"
+            disabled={status !== "ready" || showForm}
+            onClick={() => setShowForm(true)}
+          >
+            + Crea Ticket
+          </button>
+        </div>
       </header>
 
-      {status === "loading" && <p className="state-message">Caricamento ticket...</p>}
-      {status === "error" && <p className="state-message state-message--error">{error}</p>}
-      {status === "ready" && <TicketList tickets={tickets} />}
+      {showForm ? (
+        <TicketForm onCancel={() => setShowForm(false)} />
+      ) : (
+        <>
+          {status === "loading" && <p className="state-message">Caricamento ticket...</p>}
+          {status === "error" && <p className="state-message state-message--error">{error}</p>}
+          {status === "ready" && <TicketList tickets={tickets} />}
+        </>
+      )}
     </main>
   );
 }
