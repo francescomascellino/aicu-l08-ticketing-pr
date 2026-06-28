@@ -15,13 +15,13 @@ Non scrivere solo "testato" o "funziona": indica cosa hai fatto e cosa hai visto
 Branch / PR:
 
 ```txt
-[branch o link]
+create-ticket-form
 ```
 
 Slice:
 
 ```txt
-[descrivi il primo slice]
+Creazione del componente form accessibile tramite click sul pulsante "Crea Ticket".
 ```
 
 ## Verifiche
@@ -48,7 +48,7 @@ Se non puoi verificare, scrivi:
 
 ```txt
 Non verificato perche': [motivo concreto]
-Prossimo passo minimo: [azione]
+Prossimo passo minimo: Implementare validazione dell'oggetto prima di passare alla logica dell'invio della chiamta API e la logica backend di creazione di un nuovo ticket.
 ```
 
 ## Evidenza
