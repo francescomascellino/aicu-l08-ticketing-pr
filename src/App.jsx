@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { fetchOpenTickets } from "./api.js";
+import { fetchOpenTickets, fetchTicketOptions } from "./api.js";
 import TicketList from "./components/TicketList.jsx";
 import TicketForm from "./components/TicketForm.jsx";
 
@@ -7,6 +7,7 @@ export default function App() {
   const [tickets, setTickets] = useState([]);
   const [status, setStatus] = useState("loading");
   const [error, setError] = useState("");
+  const [options, setOptions] = useState(null);
   const [showForm, setShowForm] = useState(false);
 
   const forceEmpty = useMemo(() => {
@@ -41,6 +42,19 @@ export default function App() {
     };
   }, [forceEmpty]);
 
+  useEffect(() => {
+    async function loadOptions() {
+      try {
+        const data = await fetchTicketOptions();
+        setOptions(data);
+      } catch {
+        setOptions(null);
+      }
+    }
+
+    loadOptions();
+  }, []);
+
   return (
     <main className="app-shell">
       <header className="app-header">
@@ -61,7 +75,11 @@ export default function App() {
       </header>
 
       {showForm ? (
-        <TicketForm onCancel={() => setShowForm(false)} />
+        <TicketForm
+          priorities={options?.priorities ?? []}
+          areas={options?.areas ?? []}
+          onCancel={() => setShowForm(false)}
+        />
       ) : (
         <>
           {status === "loading" && <p className="state-message">Caricamento ticket...</p>}

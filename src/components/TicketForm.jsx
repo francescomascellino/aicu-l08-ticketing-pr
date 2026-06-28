@@ -1,8 +1,5 @@
 import { useState } from "react";
 
-const PRIORITY_OPTIONS = ["Alta", "Media", "Bassa"];
-const AREA_OPTIONS = ["Billing", "Accessi", "Comunicazioni", "Tecnico"];
-
 const INITIAL_FORM = {
   title: "",
   description: "",
@@ -11,7 +8,7 @@ const INITIAL_FORM = {
   area: "",
 };
 
-export default function TicketForm({ onCancel }) {
+export default function TicketForm({ priorities, areas, onCancel }) {
   const [formData, setFormData] = useState({ ...INITIAL_FORM });
 
   function handleChange(e) {
@@ -96,7 +93,7 @@ export default function TicketForm({ onCancel }) {
               onChange={handleChange}
             >
               <option value="">-- Seleziona --</option>
-              {PRIORITY_OPTIONS.map((opt) => (
+              {priorities.map((opt) => (
                 <option key={opt} value={opt}>
                   {opt}
                 </option>
@@ -117,7 +114,7 @@ export default function TicketForm({ onCancel }) {
             onChange={handleChange}
           >
             <option value="">-- Seleziona --</option>
-            {AREA_OPTIONS.map((opt) => (
+            {areas.map((opt) => (
               <option key={opt} value={opt}>
                 {opt}
               </option>

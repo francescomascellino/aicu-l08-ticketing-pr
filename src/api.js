@@ -14,3 +14,13 @@ export async function fetchOpenTickets({ empty = false } = {}) {
 
   return response.json();
 }
+
+export async function fetchTicketOptions() {
+  const response = await fetch("/api/ticket-options");
+
+  if (!response.ok) {
+    throw new Error("Impossibile caricare le opzioni.");
+  }
+
+  return response.json();
+}
